@@ -1,8 +1,8 @@
-import 'dart:async';
-
+import 'package:dispenserx/services/firebase/authentication.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class _ProfileCategory extends StatelessWidget {
   const _ProfileCategory({ Key key, this.icon, this.children }) : super(key: key);
@@ -102,28 +102,43 @@ class ProfileScreenState extends State<ProfileScreen> {
   AppBarBehavior _appBarBehavior = AppBarBehavior.pinned;
 
   FirebaseAuth _auth = FirebaseAuth.instance;
-  Future<FirebaseUser> _currentUser = FirebaseAuth.instance.currentUser();
   //TODO: Remove dummy data:
   //Dummy Data
    //photo must access height, so we must enter it in the body...
-  static const String courierName =  ('Courier Name');
-  static const String uid = ('*Firebase UID*');
-  static const String phoneNo = ('(234) 567-9876');
-  static const String address = ('123 Q Lane');
-  static const String address2 = ('New York, New York, USA.');
-  static const String email = ('example@example.com');
-  static const String status = ('Online');
-  static const String joinDate = 'Mar 03, 2018';
-  static const String dateOfBirth = 'June 06, 1997';
+  static String courierName =  ('Courier Name');
+ // static String uid = ('*Firebase UID*');
+  static String phoneNo = ('(234) 567-9876');
+  static String address = ('123 Q Lane');
+  static String address2 = ('New York, New York, USA.');
+  static String email = ('example@example.com');
+  static String status = ('Online');
+  static String joinDate = 'Mar 03, 2018';
+  static String dateOfBirth = 'June 06, 1997';
+  static String profilePhotoUrl;
+  static String verified;
+
+  DocumentSnapshot profile;
 
   @override
   void initState() {
     super.initState();
-    //TODO: GRAB UID
-    //FirebaseAuth.instance.currentUser().;
-//    UserInfo.uid;
-//    var ref = _currentUser.providerData[0].uid;
-//    var _userData = Firestore.instance.document('drivers/$_currentUser.uid'),
+    email = UserAuth.currentUser.email;
+    profile = UserAuth.profileDocument;
+    courierName = profile['name'];
+    phoneNo = profile['phoneNumber'];
+    address = profile['address'];
+    address2 = 'line 2 not in Firestore - todo';//profile['adress'];
+    status = 'todo';
+    double num = profile['date'];
+    joinDate =  '$num';
+    dateOfBirth = 'todo - not in fb';
+    profilePhotoUrl = profile['profilePictureURL'];
+    if(profile['verified']){
+      verified = 'Verified';
+    }else{
+      verified = 'Not Verified';
+    }
+
   }
 
   @override
@@ -159,11 +174,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                 background: new Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    new Image.asset(
-                      'assets/courier_example.jpg',
-                      fit: BoxFit.cover,
-                      height: _appBarHeight,
-                    ),
+                    new CachedNetworkImage(imageUrl: profilePhotoUrl),
                     // This gradient ensures that the toolbar icons are distinct
                     // against the background image.
                     const DecoratedBox(
@@ -189,7 +200,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                     new _ProfileItem(
                       //icon: Icons.person_pin_circle,
                       tooltip: 'Name',
-                      lines: const <String>[
+                      lines: <String>[
                         courierName,
                         'Name',
                       ],
@@ -202,7 +213,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             content: const Text('This button will update your email.')
                         ));
                       },
-                      lines: const <String>[
+                      lines: <String>[
                         email,
                         'Personal',
                       ],
@@ -233,14 +244,14 @@ class ProfileScreenState extends State<ProfileScreen> {
 
                     new _ProfileItem(
                       tooltip: 'Phone Number',
-                      lines: const <String>[
+                      lines: <String>[
                         phoneNo,
                         'Phone Number',
                       ],
                     ),
                     new _ProfileItem(
                       tooltip: 'Address',
-                      lines: const <String>[
+                      lines: <String>[
                         address,
                         address2,
                         'Address',
@@ -249,7 +260,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                     new _ProfileItem(
                       icon: Icons.date_range,
                       tooltip: 'Date of Birth',
-                      lines: const <String>[
+                      lines: <String>[
                         dateOfBirth,
                         'Date of Birth',
                       ],
@@ -272,7 +283,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                             content: const Text('This is your current status')
                         ));
                       },
-                      lines: const <String>[
+                      lines: <String>[
                         status,
                         'Current Status',
                       ],
@@ -286,8 +297,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                             content: const Text('You may begin working!')
                         ));
                       },
-                      lines: const <String>[
-                        'Verified',
+                      lines: <String>[
+                        verified,
                         'Current Verification Status',
                       ],
                     ),
@@ -295,7 +306,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                     new _ProfileItem(
                       icon: Icons.date_range,
                       tooltip: 'Date joined',
-                      lines: const <String>[
+                      lines: <String>[
                         joinDate,
                         'Date Joined',
                       ],
