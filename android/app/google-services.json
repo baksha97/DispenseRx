@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "966953661548",
+    "firebase_url": "https://dispenserx-85f34.firebaseio.com",
+    "project_id": "dispenserx-85f34",
+    "storage_bucket": "dispenserx-85f34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:966953661548:android:3f867bef97847c87",
+        "android_client_info": {
+          "package_name": "com.dispenserxteam.dispenserx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "966953661548-gv0m2f741pmkj2t04m3p8huqsj64cj0m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dispenserxteam.dispenserx",
+            "certificate_hash": "4ebf9c8e9a6b4ba925d1e5436371fe1d35af618f"
+          }
+        },
+        {
+          "client_id": "966953661548-gh64kjmri850eaikh6dq3ajm685v2v3d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOAjOzZP_snyrmc6HEHlzEchSuu8cy8io"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "966953661548-gh64kjmri850eaikh6dq3ajm685v2v3d.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "966953661548-0kl95paq5oc2a11sr9u5u7028re1glk7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dispenserxteam.dispenserx"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
